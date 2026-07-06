@@ -1,0 +1,16 @@
+<testsuites id="" name="" tests="2" failures="0" skipped="0" errors="0" time="7.669395000000001">
+<testsuite name="parallel_prof.spec.js" timestamp="2026-07-06T06:30:47.754Z" hostname="parallel-demo" tests="2" failures="0" skipped="0" time="5.488" errors="0">
+<testcase name="Step 1 — add backpack to cart" classname="parallel_prof.spec.js" time="0.337">
+<system-out>
+<![CDATA[Step 1 done — backpack added
+]]>
+</system-out>
+</testcase>
+<testcase name="Step 2 — verify cart has 1 item (depends on Step 1)" classname="parallel_prof.spec.js" time="5.151">
+<system-out>
+<![CDATA[Step 2 done — cart verified
+]]>
+</system-out>
+</testcase>
+</testsuite>
+</testsuites>
