@@ -1,20 +1,18 @@
 const { defineConfig, devices } = require('@playwright/test');
-const { junit } = require('node:test/reporters');
+const { baseConfig, isCI } = require('./playwright.base.config');
 //npx playwright test --config=playwright.local.config.js --headed     
 // This config is for testing against our OWN local server (server.js).
-const isCI = !!process.env.CI;
 
 module.exports = defineConfig({
+  ...baseConfig,
+
   testDir: './tests/local',
 
   use: {
+    ...baseConfig.use,
     // This matches the PORT in server.js — all tests use page.goto('/products')
     // and Playwright prepends this automatically via baseURL.
     baseURL: 'http://localhost:3000',
-
-    trace: 'on-first-retry',
-    screenshot: isCI ? 'only-on-failure' : 'off',
-    video: isCI ? 'retain-on-failure' : 'off',
   },
   reporter:[
     ['list'],

@@ -1,4 +1,5 @@
 const { defineConfig, devices } = require('@playwright/test');
+const { baseConfig, isCI } = require('./playwright.base.config');
 
 // Real, public e-commerce demo built by Sauce Labs specifically for automation practice.
 const ENVIRONMENTS = {
@@ -10,58 +11,21 @@ const ENVIRONMENTS = {
 const ENV = process.env.ENV || 'local';
 const baseURL = ENVIRONMENTS[ENV];
 
-// GitHub Actions, GitLab CI, and most other CI providers automatically set
-// process.env.CI = 'true'. We don't have to set this ourselves — Playwright
-// and almost every CI platform already agree on this convention.
-const isCI = !!process.env.CI;
-
 module.exports = defineConfig({
+  ...baseConfig,
+
   testDir: './tests',
 
-  // 0 locally — fail fast, you're watching it anyway
-  // 2 in CI    — safety net for infra blips, network hiccups
-  retries: isCI ? 2 : 0,
-
-  // 50% of CPU cores by default (Playwright's own default)
-  // Set explicitly so it's visible and intentional
-  workers: isCI ? 4 : 2,
-
-  // false = files run in parallel, tests within a file run serially (DEFAULT)
-  // true  = every individual test runs in parallel — requires full isolation
-  fullyParallel: false,
-
-  // Reporter chain — multiple reporters can run simultaneously
+  // Reporter chain — extending base reporters with allure and CI blob reporter
   reporter: [
-    // list: shows each test result as it finishes — good for local dev
-    ['list'],
+    ...baseConfig.reporter,
     ['allure-playwright', { resultsDir: 'my-allure-results' }],
-    // html: generates the clickable HTML report with traces/screenshots
-    // open: 'never' in CI — no browser to open; 'on-failure' locally
-    ['html', { open: isCI ? 'never' : 'on-failure' }],
-    // blob: required for --shard + merge-reports workflow in CI
     ...(isCI ? [['blob']] : []),
   ],
 
   use: {
+    ...baseConfig.use,
     baseURL,
-
-    // LOCAL: 'on-first-retry' — you're watching with --headed anyway, so only
-    // capture a trace if a test actually fails and gets retried. Keeps disk light.
-    // CI: same on-first-retry, but CI runs headless, so this trace is often the
-    // ONLY evidence you'll have for a failure — this is non-negotiable in CI.
-    trace: 'on-first-retry',
-
-    // LOCAL: off — a screenshot of every passing test is pure noise, you're
-    // already looking at the browser window yourself.
-    // CI: only-on-failure — exactly one image per failing test, cheap and useful.
-    screenshot: isCI ? 'only-on-failure' : 'off',
-
-    // LOCAL: off — video recording slightly slows every test and the files
-    // are large; not worth it when you can watch headed mode live.
-    // CI: retain-on-failure — keeps the recording ONLY for failed tests,
-    // deletes it for passing ones. Full video > trace for some teams when
-    // debugging timing-sensitive UI glitches.
-    video: isCI ? 'retain-on-failure' : 'off',
   },
 
   projects: [

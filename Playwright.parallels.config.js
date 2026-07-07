@@ -1,10 +1,14 @@
 const { defineConfig, devices } = require('@playwright/test');
+const { baseConfig } = require('./playwright.base.config');
 //kill node
 //taskkill /F /IM node.exe   
 module.exports = defineConfig({
+  ...baseConfig,
+
   testDir: './tests/parallel_proof',
 
   use: {
+    ...baseConfig.use,
     baseURL: 'http://localhost:3002',
   },
   webServer: {

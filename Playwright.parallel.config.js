@@ -1,9 +1,13 @@
 const { defineConfig, devices } = require('@playwright/test');
+const { baseConfig } = require('./playwright.base.config');
 
 module.exports = defineConfig({
+  ...baseConfig,
+
   testDir: './tests/parallel-demo',
 
   use: {
+    ...baseConfig.use,
     baseURL: 'http://localhost:3000',
   },
 
