@@ -64,7 +64,12 @@ jobs:
         ref: gh-pages
         path: gh-pages
 
+    - name: Ensure gh-pages directory exists
+      if: always() && matrix.config.file == 'playwright.config.js'
+      run: mkdir -p gh-pages
+
     - name: Build Allure Report with History
+
       uses: simple-elf/allure-report-action@master
       if: always() && matrix.config.file == 'playwright.config.js'
       id: allure-report
