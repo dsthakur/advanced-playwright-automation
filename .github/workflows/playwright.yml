@@ -67,3 +67,25 @@ jobs:
         if-no-files-found: ignore
         retention-days: 14
 
+  merge-reports:
+    runs-on: ubuntu-latest
+    needs: test
+    if: always()
+    steps:
+    - name: Download all reports
+      uses: actions/download-artifact@v4
+      continue-on-error: true
+      with:
+        path: all-reports
+        pattern: playwright-html-report-*
+        merge-multiple: false
+
+    - name: Upload Combined Playwright HTML Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: combined-playwright-html-report
+        path: all-reports/
+        if-no-files-found: ignore
+        retention-days: 14
+
