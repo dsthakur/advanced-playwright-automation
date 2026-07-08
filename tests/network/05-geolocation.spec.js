@@ -11,7 +11,7 @@ test.describe('Browser Permissions & Geolocation Mocking', () => {
     await context.setGeolocation(mockedCoordinates);
 
     // 3. Navigate to a secure origin to query window.navigator
-    await page.goto('https://example.com');
+    await page.goto('https://google.com');
 
     // 4. Request current coordinates using browser's geolocation API
     const coords = await page.evaluate(() => {
