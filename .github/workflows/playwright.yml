@@ -69,8 +69,7 @@ jobs:
       run: mkdir -p gh-pages
 
     - name: Build Allure Report with History
-
-      uses: simple-elf/allure-report-action@master
+      uses: simple-elf/allure-report-action@v1
       if: always() && matrix.config.file == 'playwright.config.js'
       id: allure-report
       with:
@@ -80,7 +79,7 @@ jobs:
         allure_history: allure-history
 
     - name: Deploy Allure report to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4
       if: always() && matrix.config.file == 'playwright.config.js'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
