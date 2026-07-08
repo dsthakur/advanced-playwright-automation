@@ -1,4 +1,5 @@
-const { test: base, expect } = require('@playwright/test');
+const { test: base } = require('playwright-bdd');
+const { expect } = require('@playwright/test');
 
 // ================================================================
 // LEVEL 1 — inventoryPage fixture
@@ -94,5 +95,7 @@ const withCheckoutPage = withCartPage.extend({
   },
 });
 
+const test = withCheckoutPage;
+
 // Export all three levels so test files can import whichever they need
-module.exports = { withInventoryPage, withCartPage, withCheckoutPage, expect };
+module.exports = { test, withInventoryPage, withCartPage, withCheckoutPage, expect };

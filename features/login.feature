@@ -1,3 +1,4 @@
+@smoke
 Feature: Login Functionality
 
   Scenario: Login page loads with input fields

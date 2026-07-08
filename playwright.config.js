@@ -4,7 +4,7 @@ const { defineBddConfig } = require('playwright-bdd');
 
 const bddTestDir = defineBddConfig({
   features: 'features/*.feature',
-  steps: 'steps/*.steps.js',
+  steps: ['steps/*.steps.js', 'fixtures/*.fixtures.js'],
 });
 
 // Real, public e-commerce demo built by Sauce Labs specifically for automation practice.
@@ -45,6 +45,7 @@ module.exports = defineConfig({
     {
       name: 'smoke',
       testDir: bddTestDir,
+      grep: /@smoke/,
       use: { ...devices['Desktop Chrome'] },
       // smoke intentionally does NOT depend on setup — it tests login itself,
       // including the locked_out_user negative case, so it needs to start logged OUT.
@@ -52,7 +53,8 @@ module.exports = defineConfig({
 
     {
       name: 'regression-chromium',
-      testDir: './tests/regression',
+      testDir: bddTestDir,
+      grep: /@regression/,
       use: {
         ...devices['Desktop Chrome'],
         storageState: 'playwright/.auth/standard_user.json',
@@ -61,7 +63,8 @@ module.exports = defineConfig({
     },
     {
       name: 'regression-firefox',
-      testDir: './tests/regression',
+      testDir: bddTestDir,
+      grep: /@regression/,
       use: {
         ...devices['Desktop Firefox'],
         storageState: 'playwright/.auth/standard_user.json',
@@ -70,7 +73,8 @@ module.exports = defineConfig({
     },
     {
       name: 'regression-webkit',
-      testDir: './tests/regression',
+      testDir: bddTestDir,
+      grep: /@regression/,
       use: {
         ...devices['Desktop Safari'],
         storageState: 'playwright/.auth/standard_user.json',
