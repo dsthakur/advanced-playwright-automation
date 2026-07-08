@@ -47,4 +47,24 @@ test.describe('Browser Permissions & Geolocation Mocking', () => {
     expect(status).toBe('granted');
   });
 
+  test('verify mocked location is reflected on gps-coordinates.net/my-location', async ({ context, page }) => {
+    // 1. Grant geolocation permissions to the browser context
+    await context.grantPermissions(['geolocation']);
+
+    // 2. Set mock coordinates to Paris (Eiffel Tower)
+    const mockedCoordinates = { latitude: 48.8584, longitude: 2.2945 };
+    await context.setGeolocation(mockedCoordinates);
+
+    // 3. Navigate to the coordinates verification website
+    await page.goto('https://www.gps-coordinates.net/my-location');
+
+    // 4. Assert that the page display elements display the correct latitude and longitude
+    const latSpan = page.locator('#lat');
+    const lngSpan = page.locator('#lng');
+
+    // Wait for the client-side geolocation script to resolve and update the text
+    await expect(latSpan).toContainText(mockedCoordinates.latitude.toString(), { timeout: 10000 });
+    await expect(lngSpan).toContainText(mockedCoordinates.longitude.toString(), { timeout: 10000 });
+  });
+
 });
