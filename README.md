@@ -30,7 +30,11 @@ Fine-grained control over network requests to simulate complex edge cases:
 *   **Context Isolation**: Shows that every test block has a unique, isolated browser context by default.
 *   **Serial Execution**: Shows how to run sequential steps safely using `test.describe.configure({ mode: 'serial' })` or configuring single worker sequential flows.
 
-### 5. Automated CI/CD (GitHub Actions)
+### 5. Browser Permissions & Geolocation Mocking
+*   **Permissions Granting**: Demonstrates how to grant browser-level permissions (such as `notifications` or `geolocation`) dynamically inside browser contexts.
+*   **Location Mocking**: Simulates coordinates (e.g. setting latitude/longitude for Paris) and verifies browser APIs and external web map services (like `gps-coordinates.net`) detect and display the mocked coordinates.
+
+### 6. Automated CI/CD (GitHub Actions)
 *   **Strategy Matrix**: Automatically executes test suites across different configurations in parallel:
     *   `main-regression-suite` (against Saucedemo live site)
     *   `local-shop-suite` (against the local `server.js` server)
@@ -128,19 +132,27 @@ node server2.js
 ```
 
 ### 6. Allure Reporting Reference
-After running tests (which outputs raw reports to `my-allure-results`), you can generate and view HTML reports:
+After running tests (which outputs raw reports to `my-allure-results`), you can clean, generate, and view the interactive HTML report dashboard:
 
-*   **Generate Report**:
+*   **1. Clear Previous Test Results** (Recommended to prevent old results from accumulating):
+    ```bash
+    npm run allure:clear
+    ```
+*   **2. Run your Playwright tests**:
+    ```bash
+    # e.g., Run a specific test
+    npx playwright test tests/network/05-geolocation.spec.js --headed
+    
+    # Or run the entire suite
+    npx playwright test
+    ```
+*   **3. Generate the HTML Report**:
     ```bash
     npm run allure:generate
     ```
-*   **Open Report**:
+*   **4. Serve and Open the Report Dashboard**:
     ```bash
     npm run allure:open
-    ```
-*   **Clear Results/Report**:
-    ```bash
-    npm run allure:clear
     ```
 
 > [!NOTE]
