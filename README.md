@@ -30,6 +30,14 @@ Fine-grained control over network requests to simulate complex edge cases:
 *   **Context Isolation**: Shows that every test block has a unique, isolated browser context by default.
 *   **Serial Execution**: Shows how to run sequential steps safely using `test.describe.configure({ mode: 'serial' })` or configuring single worker sequential flows.
 
+### 5. Automated CI/CD (GitHub Actions)
+*   **Strategy Matrix**: Automatically executes test suites across different configurations in parallel:
+    *   `main-regression-suite` (against Saucedemo live site)
+    *   `local-shop-suite` (against the local `server.js` server)
+    *   `parallel-proof-suite` (against `server2.js`)
+    *   `parallel-demo-suite` (parallel demo tests)
+*   **Unified Artifact Merging**: Individual jobs run in parallel, and a final step automatically downloads, consolidates, and uploads a single unified artifact (`combined-playwright-html-report`) containing the HTML reports for all executed suites, making report downloads from GitHub runs extremely simple.
+
 ---
 
 ## 📁 Repository Structure
