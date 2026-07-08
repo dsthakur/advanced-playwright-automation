@@ -88,7 +88,7 @@ module.exports = defineConfig({
     // needs access to saucedemo.com with standard_user session
     {
       name: 'fixtures-demo',
-      testDir: './tests/fixtures-demo',
+      testDir: './tests/fixtures_demo',
       use: {
         ...devices['Desktop Chrome'],
         storageState: 'playwright/.auth/standard_user.json',

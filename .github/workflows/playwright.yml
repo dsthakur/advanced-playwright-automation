@@ -18,7 +18,8 @@ jobs:
         config: [
           { name: 'main-regression-suite', file: 'playwright.config.js' },
           { name: 'local-shop-suite', file: 'playwright.local.config.js' },
-          { name: 'parallel-proof-suite', file: 'Playwright.parallels.config.js' }
+          { name: 'parallel-proof-suite', file: 'Playwright.parallels.config.js' },
+          { name: 'parallel-demo-suite', file: 'Playwright.parallel.config.js' }
         ]
     name: ${{ matrix.config.name }}
     steps:
