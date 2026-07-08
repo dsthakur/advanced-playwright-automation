@@ -51,7 +51,7 @@ Fine-grained control over network requests to simulate complex edge cases:
 ├── tests/
 │   ├── setup/               # Auth setup scripts (runs first)
 │   ├── local/               # Tests targeting our local shop server
-│   ├── network/             # Network mocking, aborting, API testing, and monitoring
+│   ├── network/             # Network mocking, API testing, permissions, and location mocking
 │   ├── fixtures_demo/       # Verifying custom fixtures and scopes
 │   ├── parallel-demo/       # Demystifying parallel scheduling and context isolation
 │   └── parallel_proof/      # Verification of sequential vs parallel test behavior
