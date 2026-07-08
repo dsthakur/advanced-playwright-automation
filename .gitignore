@@ -8,3 +8,4 @@ node_modules/
 /playwright/.auth/
 /my-allure-results/
 /allure-report/
+.features-gen/

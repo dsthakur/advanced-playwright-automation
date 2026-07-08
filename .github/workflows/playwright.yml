@@ -54,6 +54,9 @@ jobs:
       if: steps.playwright-cache.outputs.cache-hit == 'true'
       run: npx playwright install-deps
 
+    - name: Generate BDD Test Files
+      run: npx bddgen
+
     - name: Run Playwright tests
       run: npx playwright test --config=${{ matrix.config.file }}
 

@@ -1,5 +1,11 @@
 const { defineConfig, devices } = require('@playwright/test');
 const { baseConfig, isCI } = require('./playwright.base.config');
+const { defineBddConfig } = require('playwright-bdd');
+
+const bddTestDir = defineBddConfig({
+  features: 'features/*.feature',
+  steps: 'steps/*.steps.js',
+});
 
 // Real, public e-commerce demo built by Sauce Labs specifically for automation practice.
 const ENVIRONMENTS = {
@@ -38,7 +44,7 @@ module.exports = defineConfig({
 
     {
       name: 'smoke',
-      testDir: './tests/smoke',
+      testDir: bddTestDir,
       use: { ...devices['Desktop Chrome'] },
       // smoke intentionally does NOT depend on setup — it tests login itself,
       // including the locked_out_user negative case, so it needs to start logged OUT.
