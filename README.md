@@ -44,12 +44,12 @@ Fine-grained control over network requests to simulate complex edge cases:
 
 ```text
 ├── .github/                 # GitHub CI actions configuration
+├── features/                # Cucumber Gherkin feature files (login, checkout, etc.)
 ├── fixtures/                # Custom Playwright fixtures (auth, auto, scope, shop, etc.)
+├── steps/                   # BDD step definition files
 ├── playwright/              # Auth storage files (.auth/standard_user.json, problem_user.json)
 ├── tests/
 │   ├── setup/               # Auth setup scripts (runs first)
-│   ├── smoke/               # Basic login and positive/negative scenarios
-│   ├── regression/          # Standard regression suites (Chromium, Firefox, Safari)
 │   ├── local/               # Tests targeting our local shop server
 │   ├── network/             # Network mocking, aborting, API testing, and monitoring
 │   ├── fixtures_demo/       # Verifying custom fixtures and scopes
@@ -81,17 +81,25 @@ Fine-grained control over network requests to simulate complex edge cases:
 
 ## 💻 Command Reference
 
-Run the tests using the appropriate configuration file depending on what you want to verify:
+Run the tests using the appropriate configuration file depending on what you want to verify. Note that since we use **playwright-bdd**, you must compile feature files using `npx bddgen` before executing BDD tests.
 
 ### 1. Run Main Test Suite (Against Saucedemo)
-Executes all regression, smoke, visual, network, and fixture tests.
+Executes all regression, smoke, BDD, visual, network, and fixture tests.
 ```bash
+npx bddgen
 npx playwright test
 ```
 
-### 2. Run Only Smoke Tests
+### 2. Run Only Smoke (BDD) Tests
 ```bash
+npx bddgen
 npx playwright test --project=smoke
+```
+
+### 3. Run Only Regression (BDD) Tagged Tests
+```bash
+npx bddgen
+npx playwright test --grep "@regression"
 ```
 
 ### 3. Run Local Server Tests
